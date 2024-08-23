@@ -1,19 +1,29 @@
 .image-view-pane {
-    -fx-background-color: #fff; /* White background */
+    -fx-background-color: #FFF;
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
 }
 
 .blackSquare {
-    -fx-background-color: #000000; /* Black background */
-}
-
-.blackPiece {
-    /*-fx-effect: invert(1);*/
+    -fx-background-color: #333; /* Black background */
 }
 
 .selectedSquare {
-    -fx-background-color: #06F important;
+    -fx-border-color: #06F; /* Border color */
+    -fx-border-width: 8px;   /* Border width */
+    -fx-border-style: solid; /* Border style (solid, dashed, etc.) */
 }
 
+.possibleMove.blackSquare {
+     -fx-background-color: #005500;
+     -fx-border-color: #030;
+ }
+
 .possibleMove {
-    -fx-background-color: #0F6 important;
+    -fx-background-color: #00BB00;
+    -fx-border-color: #030;
+    -fx-border-width: 3px;
+    -fx-border-style: solid;
 }
+

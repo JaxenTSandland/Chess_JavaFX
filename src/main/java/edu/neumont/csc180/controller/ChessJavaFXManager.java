@@ -78,7 +78,6 @@ public class ChessJavaFXManager {
     }
 
     public boolean playerSelectPiece(Piece piece) {
-        fxController.setBoard(pieces, null, piece.getPosition());
 
         return false;
 
@@ -218,7 +217,7 @@ public class ChessJavaFXManager {
         return false;
     }
 
-    private void movePiece(Piece piece, Point target) {
+    public void movePiece(Piece piece, Point target) {
         Point oldPosition = new Point(piece.getPosition().x, piece.getPosition().y);
         Piece targetPiece = pieces[target.x][target.y];
         boolean firstMove = piece.isFirstMove();
@@ -286,7 +285,6 @@ public class ChessJavaFXManager {
                 addToLog(newQueen.getSymbol(), piece.colorToString(true) + " pawn promoted to queen");
             }
         }
-
     }
 
     private void addToLog(String symbol, String message) {
@@ -434,6 +432,18 @@ public class ChessJavaFXManager {
             }
         }
         return newPieces;
+    }
+
+    public void updateChessboard() {
+        fxController.setBoard(pieces);
+    }
+
+    public void updateChessboard(Piece selectedPiece) {
+        if (selectedPiece != null) {
+            fxController.setBoard(pieces, selectedPiece.getPossibleMoves(pieces, true), selectedPiece.getPosition());
+        } else {
+            fxController.setBoard(pieces);
+        }
     }
 
 }

@@ -9,23 +9,16 @@ package edu.neumont.csc180.view;
 import edu.neumont.csc180.controller.ChessJavaFXManager;
 import edu.neumont.csc180.model.Piece;
 import edu.neumont.csc180.model.PieceType;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.awt.*;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -39,6 +32,7 @@ public class ChessboardViewController {
 
     private ImageView[][] imageViews;
     private ChessJavaFXManager chessJavaFXManager;
+    private Piece selectedPiece;
 
     public void setChessJavaFXManager(ChessJavaFXManager chessJavaFXManager) {
         this.chessJavaFXManager = chessJavaFXManager;
@@ -50,13 +44,16 @@ public class ChessboardViewController {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 ImageView imageView = new ImageView();
+                imageView.setPreserveRatio(true);
+                imageView.setFitWidth(80);
+                imageView.setFitHeight(80);
 
                 final int finalRow = row;
                 final int finalCol = col;
 
                 StackPane pane = new StackPane(imageView);
-                imageView.setOnMouseClicked(event -> handleImageViewClick(finalRow, finalCol));
-                pane.setOnMouseClicked(event -> handleImageViewClick(finalRow, finalCol));
+                imageView.setOnMouseClicked(event -> squareClicked(finalRow, finalCol));
+                pane.setOnMouseClicked(event -> squareClicked(finalRow, finalCol));
                 pane.getStyleClass().add("image-view-pane");
                 if ((row + col) % 2 == 0) {
                     pane.getStyleClass().add("blackSquare");
@@ -74,15 +71,22 @@ public class ChessboardViewController {
         return imageViews;
     }
 
-    private void handleImageViewClick(int row, int col) {
-        if (row < 0 || row >= 8 || col < 0 || col >= 8) return;
+    private void squareClicked(int row, int col) {
         Piece piece = chessJavaFXManager.getPieces()[row][col];
-        if (piece == null) return;
+        StackPane parentPane = (StackPane) imageViews[row][col].getParent();
+        if (piece != null && piece.isWhite() && !parentPane.getStyleClass().contains("possibleMove")) {
+                if (imageViews[row][col] == null) return;
+                selectedPiece = piece;
+                chessJavaFXManager.updateChessboard(selectedPiece);
+        } else if (parentPane.getStyleClass().contains("possibleMove") && selectedPiece != null) {
+            chessJavaFXManager.movePiece(selectedPiece, new Point(row, col));
 
-        if (imageViews[row][col] == null) return;
+        } else if (!parentPane.getStyleClass().contains("possibleMove") && selectedPiece != null) {
+            selectedPiece = null;
+        }
 
-        chessJavaFXManager.playerSelectPiece(piece);
 
+        chessJavaFXManager.updateChessboard(selectedPiece);
     }
 
     public void setBoard(Piece[][] pieces) {
@@ -92,63 +96,81 @@ public class ChessboardViewController {
     public void setBoard(Piece[][] pieces, ArrayList<Point> possibleMoves, Point selectedSpot) {
         for (int row = 0; row < pieces.length; row++) {
             for (int col = 0; col < pieces[0].length; col++) {
-                clearClassesFromSqaure(row, col);
+                clearStylingFromSquare(row, col);
+                Piece piece = pieces[row][col];
 
-                if (pieces[row][col] != null) {
-                    Piece piece = pieces[row][col];
+                if (piece != null) {
                     PieceType type = piece.getType();
                     char colorModifier = (piece.isWhite()) ? 'w' : 'b';
                     String imageName = colorModifier + type.toString().substring(0, 1).toUpperCase() + type.toString().substring(1).toLowerCase();
 
                     if (!piece.isWhite()) { //Set special properties for black pieces
-                        DropShadow borderGlow = new DropShadow();
-                        borderGlow.setOffsetY(0f);
-                        borderGlow.setOffsetX(0f);
-                        borderGlow.setColor(Color.WHITE);
-                        borderGlow.setWidth(30);
-                        borderGlow.setHeight(30);
-
-                        imageViews[row][col].setEffect(borderGlow);
+                        addGlowToImageView(imageViews[row][col], Color.WHITE);
                     }
 
-                    if (selectedSpot != null) {
-                        addClassesToSelectedSpotAndPossibleMove(row, col, selectedSpot, possibleMoves);
-                    }
 
+                    if (!addStyleClassIfSelectedSpot(row, col, selectedSpot)) {
+                        addStyleClassIfPossibleMove(row, col, possibleMoves);
+                    }
                     setImage(row, col, imageName);
+
                 } else {
                     setImage(row, col, "");
+                    addStyleClassIfPossibleMove(row, col, possibleMoves);
                 }
             }
         }
     }
 
+    private void addGlowToImageView(ImageView imageView, Color white) {
+        DropShadow borderGlow = new DropShadow();
+        borderGlow.setOffsetY(0f);
+        borderGlow.setOffsetX(0f);
+        borderGlow.setColor(Color.WHITE);
+        borderGlow.setWidth(30);
+        borderGlow.setHeight(30);
 
-    private void addClassesToSelectedSpotAndPossibleMove(int row, int col, Point selectedSpot, ArrayList<Point> possibleMoves) {
+        imageView.setEffect(borderGlow);
+    }
+
+
+    private boolean addStyleClassIfPossibleMove(int row, int col, ArrayList<Point> possibleMoves) {
+        if (possibleMoves == null || possibleMoves.isEmpty()) return false;
+
         StackPane parent = (StackPane) imageViews[row][col].getParent();
-        if (row == selectedSpot.x && col == selectedSpot.y) {
-            parent.getStyleClass().add("selectedSquare");
-        } else {
 
-            if (possibleMoves != null && !possibleMoves.isEmpty()) {
-                boolean pointFound = findPointIsInArray(new Point(row, col), possibleMoves);
-                if (pointFound) {
-                    parent.getStyleClass().add("possibleMove");
-                }
-            }
-
+        boolean pointFound = findPointIsInArray(new Point(row, col), possibleMoves);
+        if (pointFound) {
+            parent.getStyleClass().add("possibleMove");
+            return true;
         }
+
+        return false;
+    }
+
+    private boolean addStyleClassIfSelectedSpot(int row, int col, Point selectedSpot) {
+        if (selectedSpot != null) {
+            StackPane parent = (StackPane) imageViews[row][col].getParent();
+            if (row == selectedSpot.x && col == selectedSpot.y) {
+                parent.getStyleClass().add("selectedSquare");
+                return true;
+            }
+        }
+
+        return false;
     }
 
 
-    private void clearClassesFromSqaure(int row, int col) {
+    private void clearStylingFromSquare(int row, int col) {
         if (row < 0 || row >= 8 || col < 0 || col >= 8) return;
         StackPane parent = (StackPane) imageViews[row][col].getParent();
         parent.getStyleClass().remove("selectedSquare");
         parent.getStyleClass().remove("possibleMove");
+        parent.setEffect(null);
+        imageViews[row][col].setEffect(null);
     }
 
-    
+
     private boolean findPointIsInArray(Point point, ArrayList<Point> pointList) {
         for (int p = 0; p < pointList.size(); p++) {
             if(pointList.get(p).x == point.x && pointList.get(p).y == point.y) {
