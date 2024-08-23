@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                personal.sandland.jaxen.jaxens_chessjavafx/personal.sandland.jaxen.jaxens_chessjavafx.Main
+                                personal.sandland.jaxen.jaxens_chessjavafx/edu.neumont.csc180.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

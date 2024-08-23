@@ -1,8 +1,10 @@
-module personal.sandland.jaxen.jaxens_chessjavafx {
+module edu.neumont.csc180 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
-    opens personal.sandland.jaxen.jaxens_chessjavafx to javafx.fxml;
-    exports personal.sandland.jaxen.jaxens_chessjavafx;
+    opens edu.neumont.csc180.controller to javafx.fxml;
+    exports edu.neumont.csc180;
+    opens edu.neumont.csc180.view to javafx.fxml;
 }

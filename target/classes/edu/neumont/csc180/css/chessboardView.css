@@ -1,0 +1,19 @@
+.image-view-pane {
+    -fx-background-color: #fff; /* White background */
+}
+
+.blackSquare {
+    -fx-background-color: #000000; /* Black background */
+}
+
+.blackPiece {
+    /*-fx-effect: invert(1);*/
+}
+
+.selectedSquare {
+    -fx-background-color: #06F important;
+}
+
+.possibleMove {
+    -fx-background-color: #0F6 important;
+}

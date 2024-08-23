@@ -1,4 +1,4 @@
-package personal.sandland.jaxen.jaxens_chessjavafx;
+package edu.neumont.csc180;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
