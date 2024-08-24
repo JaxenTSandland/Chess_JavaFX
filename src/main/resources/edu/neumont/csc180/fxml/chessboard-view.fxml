@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="900.0" stylesheets="@../css/chessboardView.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.neumont.csc180.view.ChessboardViewController">
    <children>
@@ -35,5 +38,16 @@
             <Point3D x="1.0" />
          </rotationAxis>
       </GridPane>
+      <Pane layoutX="250.0" layoutY="300.0" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-style: solid;">
+         <children>
+            <Button fx:id="endGamePane" layoutX="163.0" layoutY="100.0" mnemonicParsing="false" onAction="#newGameButtonClicked" text="New Game" />
+            <Label alignment="TOP_CENTER" layoutX="90.0" layoutY="22.0" prefHeight="49.0" prefWidth="221.0" text="You win!" textAlignment="CENTER">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Label>
+            <Button layoutX="154.0" layoutY="144.0" mnemonicParsing="false" onAction="#backToMainMenuButtonClicked" text="Back To Menu" />
+         </children>
+      </Pane>
    </children>
 </Pane>

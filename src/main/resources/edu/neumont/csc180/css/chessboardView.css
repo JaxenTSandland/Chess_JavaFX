@@ -15,9 +15,20 @@
     -fx-border-style: solid; /* Border style (solid, dashed, etc.) */
 }
 
+.selectedSquare.enemySquare {
+    -fx-border-color: #F03; /* Border color */
+    -fx-border-width: 8px;   /* Border width */
+    -fx-border-style: solid; /* Border style (solid, dashed, etc.) */
+}
+
 .possibleMove.blackSquare {
-     -fx-background-color: #005500;
+     -fx-background-color: #007700;
      -fx-border-color: #030;
+ }
+
+.blackSquare.enemyMove {
+     -fx-background-color: #770000;
+     -fx-border-color: #300;
  }
 
 .possibleMove {
@@ -26,4 +37,12 @@
     -fx-border-width: 3px;
     -fx-border-style: solid;
 }
+
+.enemyMove {
+    -fx-background-color: #BB0000;
+    -fx-border-color: #300;
+    -fx-border-width: 3px;
+    -fx-border-style: solid;
+}
+
 

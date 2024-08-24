@@ -51,7 +51,7 @@ public class ChessJavaFXManager {
         //testSetup(pieces);
 
         fxController.createBoard(pieces);
-        playerTurn = true;
+        fxController.playerMove = true;
 
 //        boolean keepGoing = true;
 //        do {
@@ -179,7 +179,11 @@ public class ChessJavaFXManager {
         return false;
     }
 
-    private boolean botMove(Piece[][] pieces, boolean white) {
+    public boolean botMove() {
+        return botMove(pieces, false);
+    }
+
+    public boolean botMove(Piece[][] pieces, boolean white) {
         ArrayList<Piece> teamPieces = white ? findWhitePieces(pieces) : findBlackPieces(pieces);
 
         Collections.shuffle(teamPieces);
@@ -195,6 +199,7 @@ public class ChessJavaFXManager {
             if(moves != null && !moves.isEmpty()) {
                 Collections.shuffle(moves);
                 String moveMessage = PlayerUI.formatMoveMessage(chosen, moves.getFirst());
+                Point lastPos = chosen.getPosition();
                 moveLog.addFirst(moveMessage);
                 moveSymbolLog.addFirst(chosen.getSymbol());
                 if(white) {
@@ -206,7 +211,10 @@ public class ChessJavaFXManager {
                     movePiece(chosen, moves.getFirst());
                     blackPrevMoves[1] = chosen.getPosition();
                 }
-                BoardCreator.drawBoard(pieces, moveLog, moveSymbolLog, null, blackPrevMoves);
+                //BoardCreator.drawBoard(pieces, moveLog, moveSymbolLog, null, blackPrevMoves);
+                ArrayList<Point> lastPosList = new ArrayList<>();
+                lastPosList.add(lastPos);
+                fxController.setBoard(pieces, lastPosList, chosen.getPosition());
                 return true;
             }
 
@@ -218,7 +226,7 @@ public class ChessJavaFXManager {
     }
 
     public void movePiece(Piece piece, Point target) {
-        Point oldPosition = new Point(piece.getPosition().x, piece.getPosition().y);
+        Point oldPosition = new Point(piece.getPosition());
         Piece targetPiece = pieces[target.x][target.y];
         boolean firstMove = piece.isFirstMove();
         pieces[piece.getPosition().x][piece.getPosition().y] = null;
@@ -226,7 +234,7 @@ public class ChessJavaFXManager {
         pieces[target.x][target.y] = piece;
 
 
-        if(targetPiece != null) {
+        if (targetPiece != null) {
         } else { //If target is empty
             if (piece.getType() == PieceType.PAWN) {
                 //Check for En Passant
