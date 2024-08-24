@@ -23,9 +23,7 @@ public class ChessJavaFXManager {
     private ArrayList<String> moveLog = new ArrayList<>();
     private ArrayList<String> moveSymbolLog = new ArrayList<>();
     private Point[] whitePrevMoves = new Point[2], blackPrevMoves = new Point[2];
-    private ChessboardViewController fxController;
-
-    private boolean playerTurn = false;
+    private final ChessboardViewController fxController;
 
     public ChessJavaFXManager(ChessboardViewController fxController) {
         this.fxController = fxController;
@@ -47,8 +45,9 @@ public class ChessJavaFXManager {
         }
     }
     public void startNewGame() {
-        pieces = defaultPieces();
-        //testSetup(pieces);
+        //pieces = defaultPieces();
+
+        testSetup(pieces);
 
         fxController.createBoard(pieces);
         fxController.playerMove = true;
@@ -63,8 +62,8 @@ public class ChessJavaFXManager {
     }
 
     public void testSetup(Piece[][] pieces) {
-        pieces[6][1] = new Rook(new Point(6,1), false);
-        pieces[1][7] = new Rook(new Point(1,7), false);
+        pieces[6][1] = new Rook(new Point(6,1), true);
+        pieces[2][1] = new Rook(new Point(2,1), true);
         //pieces[2][1] = new Rook(new Point(2,1), false);
         pieces[3][7] = new King(new Point(3,7), false);
         pieces[0][0] = new King(new Point(0,0), true);
@@ -72,7 +71,7 @@ public class ChessJavaFXManager {
 //        pieces[4][3] = new Bishop(new Point(4,3), false);
 //        pieces[4][4] = new Bishop(new Point(4,4), true);
 //        pieces[5][5] = new Rook(new Point(5,5), true);
-//        pieces[7][6] = new Queen(new Point(7,6), true);
+        pieces[7][6] = new Queen(new Point(7,6), true);
 //        pieces[2][3] = new Rook(new Point(2,3), false);
 //        pieces[3][4] = new Rook(new Point(3,4), true);
     }

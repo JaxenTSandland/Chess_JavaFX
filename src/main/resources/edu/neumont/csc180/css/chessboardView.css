@@ -45,4 +45,8 @@
     -fx-border-style: solid;
 }
 
+.disabled {
+    -fx-content-display: none;
+}
+
 

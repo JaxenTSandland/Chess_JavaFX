@@ -38,9 +38,9 @@
             <Point3D x="1.0" />
          </rotationAxis>
       </GridPane>
-      <Pane layoutX="250.0" layoutY="300.0" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-style: solid;">
+      <Pane fx:id="endGamePane" disable="true" layoutX="250.0" layoutY="300.0" opacity="0.0" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-style: solid;" stylesheets="@../css/chessboardView.css">
          <children>
-            <Button fx:id="endGamePane" layoutX="163.0" layoutY="100.0" mnemonicParsing="false" onAction="#newGameButtonClicked" text="New Game" />
+            <Button layoutX="163.0" layoutY="100.0" mnemonicParsing="false" onAction="#newGameButtonClicked" text="New Game" />
             <Label alignment="TOP_CENTER" layoutX="90.0" layoutY="22.0" prefHeight="49.0" prefWidth="221.0" text="You win!" textAlignment="CENTER">
                <font>
                   <Font size="31.0" />

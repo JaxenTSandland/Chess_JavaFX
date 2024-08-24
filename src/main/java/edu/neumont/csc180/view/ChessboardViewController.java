@@ -17,6 +17,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -40,7 +41,7 @@ public class ChessboardViewController {
     public boolean playerMove;
 
     @FXML
-    private Button endGamePane;
+    private Pane endGamePane;
 
     @FXML
     void backToMainMenuButtonClicked(ActionEvent event) {
@@ -101,8 +102,14 @@ public class ChessboardViewController {
         } else if (parentPane.getStyleClass().contains("possibleMove") && selectedPiece != null) { //Move piece to new square
             chessJavaFXManager.movePiece(selectedPiece, new Point(row, col));
             selectedPiece = null;
-            playerMove = chessJavaFXManager.botMove();
-            return;
+
+            if (!chessJavaFXManager.botMove()) {
+                playerMove = false;
+                displayEndGameUI();
+            } else {
+                return;
+            }
+
         } else if (!parentPane.getStyleClass().contains("possibleMove") && selectedPiece != null) { //Unselect highlighted piece
             selectedPiece = null;
         }
@@ -247,6 +254,12 @@ public class ChessboardViewController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void displayEndGameUI() {
+        endGamePane.disableProperty().setValue(false);
+        endGamePane.visibleProperty().setValue(true);
+        endGamePane.opacityProperty().setValue(1);
     }
 
 
