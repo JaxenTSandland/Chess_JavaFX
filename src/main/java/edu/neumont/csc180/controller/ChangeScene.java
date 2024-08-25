@@ -22,8 +22,7 @@ public class ChangeScene {
 
 
     private static FXMLLoader changeScene(Event event, String fxmlFileName) throws IOException {
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        return changeScene(stage, fxmlFileName);
+        return changeScene(convertEventToStage(event), fxmlFileName);
     }
 
 
@@ -37,11 +36,12 @@ public class ChangeScene {
 
         float width = 900;
         float height = 900;
-        if (fxmlFileName.equals("login.fxml")) {
+        if (fxmlFileName.equals("login-view.fxml")) {
             width = 400;
             height = 500;
-        } else if (fxmlFileName.equals("createAccount.fxml")) {
+        } else if (fxmlFileName.equals("createAccount-view.fxml")) {
             width = 500;
+            height = 500;
         } else if (fxmlFileName.equals("menu-view.fxml")) {
             width = 600;
             height = 400;
@@ -73,8 +73,7 @@ public class ChangeScene {
     }
 
     public static void changeSceneToMenu(Event event, String username) throws IOException {
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        changeSceneToMenu(stage, username);
+        changeSceneToMenu(convertEventToStage(event), username);
     }
 
     public static void changeSceneToMenu(Stage stage, String username) throws IOException {
@@ -83,6 +82,26 @@ public class ChangeScene {
 
         MenuViewController menuController = loader.getController();
         menuController.initData(username);
+    }
+
+    public static void changeSceneToLogin(Event event) throws IOException {
+        changeSceneToLogin(convertEventToStage(event));
+    }
+
+    public static void changeSceneToLogin(Stage stage) throws IOException {
+        changeScene(stage, "login-view.fxml");
+    }
+
+    public static void changeSceneToCreateAccount(Event event) throws IOException {
+        changeSceneToCreateAccount(convertEventToStage(event));
+    }
+
+    public static void changeSceneToCreateAccount(Stage stage) throws IOException {
+        changeScene(stage, "createAccount-view.fxml");
+    }
+
+    private static Stage convertEventToStage(Event event) {
+        return (Stage)((Node)event.getSource()).getScene().getWindow();
     }
 
 }

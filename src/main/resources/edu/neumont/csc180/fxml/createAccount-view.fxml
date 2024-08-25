@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.neumont.csc180.view.CreateAccountViewController">
+    <children>
+        <Label layoutX="161.0" layoutY="26.0" text="New account">
+            <font>
+                <Font name="System Bold" size="30.0" />
+            </font>
+        </Label>
+        <TextField fx:id="usernameTextField" layoutX="105.0" layoutY="112.0" prefHeight="39.0" prefWidth="290.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </TextField>
+        <Label layoutX="105.0" layoutY="85.0" text="Username:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="passwordTextField" layoutX="105.0" layoutY="216.0" prefHeight="39.0" prefWidth="290.0" styleClass="type=&quot;password&quot;">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </TextField>
+        <Label layoutX="105.0" layoutY="189.0" text="Password:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="confirmPasswordTextField" layoutX="105.0" layoutY="291.0" prefHeight="39.0" prefWidth="290.0" styleClass="type=&quot;password&quot;">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </TextField>
+        <Label layoutX="105.0" layoutY="264.0" text="Confirm password:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Button fx:id="createAccountButton" layoutX="169.0" layoutY="374.0" mnemonicParsing="false" onAction="#createAccountButtonPressed" style="-fx-background-color: LIGHTBLUE; -fx-border-style: SOLID; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-width: 0.5px;" text="Create account">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="cancelButton" layoutX="203.0" layoutY="433.0" mnemonicParsing="false" onAction="#cancelButtonPressed" style="-fx-background-color: LIGHTGREY; -fx-border-style: SOLID; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-width: 0.5px;" text="Cancel">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Label fx:id="errorLabel" alignment="CENTER" layoutX="105.0" layoutY="333.0" prefHeight="39.0" prefWidth="290.0" style="-fx-font-style: ITALIC;" text="Error!" textAlignment="CENTER" textFill="#ff6363" visible="false">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label fx:id="passwordRequirementsLabel" alignment="CENTER" layoutX="24.0" layoutY="162.0" prefHeight="27.0" prefWidth="458.0" style="-fx-font-style: ITALIC;" text="(Password must have at least 8 characters, 1 uppercase, 1 digit, and 1 symbol)" textAlignment="CENTER">
+            <font>
+                <Font size="13.0" />
+            </font>
+        </Label>
+    </children>
+</Pane>

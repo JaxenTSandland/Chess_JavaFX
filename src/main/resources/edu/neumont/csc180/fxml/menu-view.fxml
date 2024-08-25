@@ -34,5 +34,10 @@
             <Font name="System Italic" size="18.0" />
          </font>
       </Label>
+      <Button fx:id="logOutButton" layoutX="511.0" layoutY="18.0" mnemonicParsing="false" onAction="#logOutButtonClicked" text="Log out">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

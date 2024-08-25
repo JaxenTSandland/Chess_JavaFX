@@ -119,4 +119,22 @@ public class SQLDatabase {
             e.printStackTrace();
         }
     }
+
+    public static boolean usernameExists(String username) {
+        String sql = "select 1 from chessData where username = (?)";
+
+        try (Connection conn = DriverManager.getConnection(sqlUrl, sqlUser, sqlPassword);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // If there is a result, the username exists
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

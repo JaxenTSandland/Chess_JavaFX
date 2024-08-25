@@ -22,6 +22,9 @@ public class MenuViewController {
     private Button newGameButton;
 
     @FXML
+    private Button logOutButton;
+
+    @FXML
     private Label usernameLabel;
 
     private String username;
@@ -39,6 +42,15 @@ public class MenuViewController {
     void newGameButtonClicked(ActionEvent event) {
         try {
             ChangeScene.changeSceneToGame(event, username, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void logOutButtonClicked(ActionEvent event) {
+        try {
+            ChangeScene.changeSceneToLogin(event);
         } catch (Exception e) {
             e.printStackTrace();
         }
