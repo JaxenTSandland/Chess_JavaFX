@@ -6,7 +6,9 @@
  */
 package edu.neumont.csc180.view;
 
+import edu.neumont.csc180.controller.ChangeScene;
 import edu.neumont.csc180.controller.ChessJavaFXManager;
+import edu.neumont.csc180.controller.SQLDatabase;
 import edu.neumont.csc180.model.Piece;
 import edu.neumont.csc180.model.PieceType;
 import javafx.animation.KeyFrame;
@@ -24,6 +26,7 @@ import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -32,29 +35,37 @@ public class ChessboardViewController {
     @FXML
     private GridPane chessboardGrid;
 
-
-
+    @FXML
+    private Pane endGamePane;
 
     private ImageView[][] imageViews;
     private ChessJavaFXManager chessJavaFXManager;
     private Piece selectedPiece;
     public boolean playerMove;
+    public String username;
 
-    @FXML
-    private Pane endGamePane;
 
     @FXML
     void backToMainMenuButtonClicked(ActionEvent event) {
-
+        try {
+            ChangeScene.changeSceneToMenu(event, username);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void newGameButtonClicked(ActionEvent event) {
-
+        try {
+            ChangeScene.changeSceneToGame(event, username, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setChessJavaFXManager(ChessJavaFXManager chessJavaFXManager) {
+    public void setChessJavaFXManager(ChessJavaFXManager chessJavaFXManager, String username) {
         this.chessJavaFXManager = chessJavaFXManager;
+        this.username = username;
     }
 
     public ImageView[][] createBoard(Piece[][] pieces) {
@@ -90,7 +101,6 @@ public class ChessboardViewController {
     }
 
     private void squareClicked(int row, int col) {
-        System.out.println("squareClicked");
         if (!playerMove) return;
 
         Piece piece = chessJavaFXManager.getPieces()[row][col];
@@ -103,10 +113,12 @@ public class ChessboardViewController {
             chessJavaFXManager.movePiece(selectedPiece, new Point(row, col));
             selectedPiece = null;
 
-            if (!chessJavaFXManager.botMove()) {
+            if (!chessJavaFXManager.botMove()) { //If bot can't make a move
                 playerMove = false;
                 displayEndGameUI();
+                SQLDatabase.clearSave(username);
             } else {
+                chessJavaFXManager.save();
                 return;
             }
 

@@ -29,36 +29,32 @@ public class ChessJavaFXManager {
         this.fxController = fxController;
     }
 
+    public boolean save() {
+        boolean saved = ChessSaver.save(pieces, fxController.username);
+        if (saved) {
+            System.out.println("Save successful");
+        } else {
+            System.err.println("Save failed");
+        }
+        return saved;
+    }
+
 
     public Piece[][] getPieces() {
         return pieces;
     }
 
-    public void startMenu() {
-        int response = PlayerUI.mainMenu();
-        switch(response) {
-            case 1: //play
-                startNewGame();
-                break;
-            default: //exit
-                return;
-        }
+    public void startNewGame(String username) {
+        pieces = defaultPieces();
+        save();
+        loadContinuedGame(username);
     }
-    public void startNewGame() {
-        //pieces = defaultPieces();
 
-        testSetup(pieces);
+    public void loadContinuedGame(String username) {
+        pieces = ChessLoader.load(username);
 
         fxController.createBoard(pieces);
         fxController.playerMove = true;
-
-//        boolean keepGoing = true;
-//        do {
-//            keepGoing = play();
-//        } while(keepGoing);
-
-        //PlayerUI.pressAnythingToContinue();
-        //startMenu();
     }
 
     public void testSetup(Piece[][] pieces) {
