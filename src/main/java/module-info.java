@@ -3,6 +3,7 @@ module edu.neumont.csc180 {
     requires javafx.fxml;
     requires java.desktop;
     requires java.sql;
+    requires javafx.media;
 
 
     opens edu.neumont.csc180.controller to javafx.fxml;

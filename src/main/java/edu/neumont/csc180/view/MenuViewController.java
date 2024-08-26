@@ -8,6 +8,7 @@ package edu.neumont.csc180.view;
 import edu.neumont.csc180.controller.ChangeScene;
 import edu.neumont.csc180.controller.ChessLoader;
 import edu.neumont.csc180.controller.SQLDatabase;
+import edu.neumont.csc180.controller.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,6 +32,7 @@ public class MenuViewController {
 
     @FXML
     void continueButtonClicked(ActionEvent event) {
+        playButtonSound();
         try {
             ChangeScene.changeSceneToGame(event, username, true);
         } catch (Exception e) {
@@ -40,6 +42,7 @@ public class MenuViewController {
 
     @FXML
     void newGameButtonClicked(ActionEvent event) {
+        playButtonSound();
         try {
             ChangeScene.changeSceneToGame(event, username, false);
         } catch (Exception e) {
@@ -49,6 +52,7 @@ public class MenuViewController {
 
     @FXML
     void logOutButtonClicked(ActionEvent event) {
+        playButtonSound();
         try {
             ChangeScene.changeSceneToLogin(event);
         } catch (Exception e) {
@@ -61,6 +65,11 @@ public class MenuViewController {
         usernameLabel.setText(username);
 
         continueButton.setDisable(ChessLoader.userHasEmptySave(username));
+    }
+
+    private void playButtonSound() {
+        SoundManager soundManager = new SoundManager();
+        soundManager.playSound(SoundManager.Sounds.BUTTON_CLICK);
     }
 
 }

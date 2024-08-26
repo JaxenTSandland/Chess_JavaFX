@@ -8,6 +8,7 @@ package edu.neumont.csc180.view;
 
 import edu.neumont.csc180.controller.ChangeScene;
 import edu.neumont.csc180.controller.SQLDatabase;
+import edu.neumont.csc180.controller.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,11 +52,15 @@ public class CreateAccountViewController {
 
     @FXML
     void cancelButtonPressed(ActionEvent event) throws IOException {
+        SoundManager soundManager = new SoundManager();
+        soundManager.playSound(SoundManager.Sounds.BUTTON_CLICK);
         ChangeScene.changeSceneToLogin(event);
     }
 
     @FXML
     void createAccountButtonPressed(ActionEvent event) throws IOException {
+        SoundManager soundManager = new SoundManager();
+        soundManager.playSound(SoundManager.Sounds.BUTTON_CLICK);
 
         if (usernameTextField.getText().isEmpty() || confirmPasswordTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
             createAccountFailed("All fields must be filled in");

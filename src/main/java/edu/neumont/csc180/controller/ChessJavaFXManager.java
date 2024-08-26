@@ -24,6 +24,7 @@ public class ChessJavaFXManager {
     private ArrayList<String> moveSymbolLog = new ArrayList<>();
     private Point[] whitePrevMoves = new Point[2], blackPrevMoves = new Point[2];
     private final ChessboardViewController fxController;
+    public final SoundManager soundManager = new SoundManager();
 
     public ChessJavaFXManager(ChessboardViewController fxController) {
         this.fxController = fxController;

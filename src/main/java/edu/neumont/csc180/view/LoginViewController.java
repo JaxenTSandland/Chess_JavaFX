@@ -9,6 +9,7 @@ package edu.neumont.csc180.view;
 
 import edu.neumont.csc180.controller.ChangeScene;
 import edu.neumont.csc180.controller.SQLDatabase;
+import edu.neumont.csc180.controller.SoundManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -39,12 +40,16 @@ public class LoginViewController {
 
     @FXML
     void createAnAccountLinkTextClicked(MouseEvent event) throws IOException {
+        SoundManager soundManager = new SoundManager();
+        soundManager.playSound(SoundManager.Sounds.BUTTON_CLICK);
         ChangeScene.changeSceneToCreateAccount(event);
     }
 
 
     @FXML
     void loginButtonPressed(ActionEvent event) throws IOException {
+        SoundManager soundManager = new SoundManager();
+        soundManager.playSound(SoundManager.Sounds.BUTTON_CLICK);
         if (checkLogin(usernameTextField.getText(), passwordTextField.getText())) {
             String username = SQLDatabase.getColumnValue("username", "password", passwordTextField.getText());
             ChangeScene.changeSceneToMenu(event, username);

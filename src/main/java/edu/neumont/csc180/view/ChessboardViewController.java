@@ -9,6 +9,7 @@ package edu.neumont.csc180.view;
 import edu.neumont.csc180.controller.ChangeScene;
 import edu.neumont.csc180.controller.ChessJavaFXManager;
 import edu.neumont.csc180.controller.SQLDatabase;
+import edu.neumont.csc180.controller.SoundManager;
 import edu.neumont.csc180.model.Piece;
 import edu.neumont.csc180.model.PieceType;
 import javafx.animation.KeyFrame;
@@ -47,6 +48,7 @@ public class ChessboardViewController {
 
     @FXML
     void backToMainMenuButtonClicked(ActionEvent event) {
+        chessJavaFXManager.soundManager.playSound(SoundManager.Sounds.BUTTON_CLICK);
         try {
             ChangeScene.changeSceneToMenu(event, username);
         } catch (IOException e) {
@@ -56,6 +58,7 @@ public class ChessboardViewController {
 
     @FXML
     void newGameButtonClicked(ActionEvent event) {
+        chessJavaFXManager.soundManager.playSound(SoundManager.Sounds.BUTTON_CLICK);
         try {
             ChangeScene.changeSceneToGame(event, username, false);
         } catch (IOException e) {
@@ -112,7 +115,7 @@ public class ChessboardViewController {
         } else if (parentPane.getStyleClass().contains("possibleMove") && selectedPiece != null) { //Move piece to new square
             chessJavaFXManager.movePiece(selectedPiece, new Point(row, col));
             selectedPiece = null;
-
+            chessJavaFXManager.soundManager.playSound(SoundManager.Sounds.PIECE_MOVE);
             if (!chessJavaFXManager.botMove()) { //If bot can't make a move
                 playerMove = false;
                 displayEndGameUI();
